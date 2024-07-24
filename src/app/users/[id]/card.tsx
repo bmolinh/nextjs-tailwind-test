@@ -1,6 +1,15 @@
-import { User } from "../types";
+"use client";
 
-export default function UserCard({ user }: { user: User }) {
+import { notFound } from "next/navigation";
+import { useUsers } from "../user-context";
+
+export default function UserCard({ id }: { id: string }) {
+  const { users } = useUsers();
+
+  const user = users.find((user) => user.id === Number(id));
+
+  if (!user) notFound();
+
   return (
     <div className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30">
       <h2 className="text-2xl font-semibold">{user.name}</h2>
